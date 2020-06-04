@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       get :following, :followers
     end
   end
+  resources :rooms
   resources :books do
   	resource :favorites, only: [:create, :destroy]
   	resource :book_comments, only: [:create, :destroy]

@@ -6,7 +6,23 @@ class UsersController < ApplicationController
   	@user = User.find(params[:id])
   	@books = @user.books
   	@book = Book.new #new bookの新規投稿で必要（保存処理はbookコントローラー側で実施）
-  end
+    @currentUserRoom = UserRoom.where(user_id: current_user.id)
+    @UserUserRoom = UserRoom.where(user_id: @user.id)
+    unless @user.id == current_user.id
+      @currentUserRoom.each do |cu|
+        @UserUserRoom.each do |u|
+          if cu.room_id == u.room_id then
+            @isRoom = true
+            @room_id = cu.room_id
+          end
+        end
+      end
+    unless @isRoom
+        @room = Room.new
+        @user_room = UserRoom.new
+      end
+    end
+end
 
   def index
   	@users = User.all #一覧表示するためにUserモデルのデータを全て変数に入れて取り出す。
